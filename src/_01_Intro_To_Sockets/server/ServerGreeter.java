@@ -27,7 +27,7 @@ public class ServerGreeter extends Thread {
 				try
 				{
 				//8. Let the user know that the server is waiting for a client to connect.
-					System.out.println("Waiting for client to connect");
+				System.out.println("Waiting for client to connect");
 				//9. Create an object of the Socket class and initialize it to serverSocket.accept();
 				//   Change serverSocket to match the ServerSocket member variable you created in step 1.
 				//   The program will wait her until either a client connects or the timeout expires.
@@ -41,9 +41,9 @@ public class ServerGreeter extends Thread {
 				//13. Create a DataOutputStream object. When initializing it, use the Server object you created in step 9 to call the getOutputStream() method.
 				DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
 				//14. Use the DataOutputStream object to send a message to the client using the writeUTF(String message) method.
-				
+				dos.writeUTF("test");
 				//15. Close the client server
-					
+					socket.close();
 				}
 				
 			//6. If the program catches a SockeTimeoutException, let the user know about it and set loop's boolean variable to false.
@@ -56,6 +56,14 @@ public class ServerGreeter extends Thread {
 
 	public static void main(String[] args) {
 		//16. In a new thread, create an object of the ServerGreeter class and start the thread. Don't forget the try-catch.
-		
+		new Thread(() ->
+		{
+			try
+			{
+				ServerGreeter sg = new ServerGreeter();
+				sg.run();
+			}
+			catch(IOException e) {e.printStackTrace();}
+		}).start();
 	}
 }
