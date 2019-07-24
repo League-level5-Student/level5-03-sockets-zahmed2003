@@ -18,7 +18,7 @@ public class ClientGreeter {
       try
       {
     	 //4. Create an object of the Socket class. When initializing the object, pass in the ip address and the port number
-    	  	Socket socket = new Socket(ip_address, port_number);
+    	  Socket socket = new Socket(ip_address, port_number);
          //5. Create a DataOutputStream object. When initializing it, use the Socket object you created in step 4 to call the getOutputStream() method.
          DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
          //6. Use the DataOutputStream object to send a message to the server using the writeUTF(String message) method
