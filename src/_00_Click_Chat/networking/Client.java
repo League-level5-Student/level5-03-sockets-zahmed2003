@@ -49,6 +49,7 @@ public class Client {
 		}
 	}
 	
+	
 	public void sendClick() {
 		try {
 			if (os != null) {

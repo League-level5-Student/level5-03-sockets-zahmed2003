@@ -1,6 +1,9 @@
 package _01_Intro_To_Sockets.server;
 
 import java.net.*;
+
+import javax.swing.JOptionPane;
+
 import java.io.*;
 
 public class ServerGreeter extends Thread {
@@ -10,7 +13,8 @@ public class ServerGreeter extends Thread {
 	public ServerGreeter() throws IOException {
 		//2. Initialize the ServerSocket object. In the parameters,
 		//   you must define the port at which the server will listen for connections.
-		serverSocket = new ServerSocket(8080);
+		serverSocket = new ServerSocket(8088);
+		JOptionPane.showMessageDialog(null, "Server started at the ip address " + InetAddress.getLocalHost().getHostAddress() + " and port " + serverSocket.getLocalPort());
 		//*OPTIONAL* you can set a time limit for the server to wait by using the 
 		//  ServerSocket's setSoTimeout(int timeInMilliSeconds) method
 	}
@@ -26,7 +30,7 @@ public class ServerGreeter extends Thread {
 				try
 				{
 				//8. Let the user know that the server is waiting for a client to connect.
-				System.out.println("Waiting for client to connect");
+				System.out.println("Waiting for client to connect...");
 				//9. Create an object of the Socket class and initialize it to serverSocket.accept();
 				//   Change serverSocket to match the ServerSocket member variable you created in step 1.
 				//   The program will wait her until either a client connects or the timeout expires.
@@ -36,13 +40,17 @@ public class ServerGreeter extends Thread {
 				//11. Create a DataInputStream object. When initializing it, use the Socket object you created in step 9 to call the getInputStream() method.
 				DataInputStream dis = new DataInputStream(socket.getInputStream());
 				//12. Print the message from the DataInputStream object using the readUTF() method
-				dis.readUTF();
+				JOptionPane.showMessageDialog(null, "The client says: " + dis.readUTF());
 				//13. Create a DataOutputStream object. When initializing it, use the Server object you created in step 9 to call the getOutputStream() method.
 				DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
 				//14. Use the DataOutputStream object to send a message to the client using the writeUTF(String message) method.
-				dos.writeUTF("test");
+				dos.writeUTF(JOptionPane.showInputDialog("Write a message to the client."));
 				//15. Close the client server
-					socket.close();
+				 if(JOptionPane.showConfirmDialog(null, "Do you wish to close this connection?") == 1)
+		         {
+		         socket.close();
+		         serverSocket.close();
+		         }
 				}
 				
 			//6. If the program catches a SockeTimeoutException, let the user know about it and set loop's boolean variable to false.
